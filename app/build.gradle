@@ -36,6 +36,8 @@ dependencies {
     implementation project(path: ':core')
     implementation project(path: ':splash')
     implementation project(path: ':remote-repository')
+    implementation generalDeps.navigation
+    implementation generalDeps.navigation_ui
 
     testImplementation testDeps.junit
     testImplementation testDeps.koin_test
