@@ -6,6 +6,7 @@ apply from: "../version.gradle"
 
 android {
     compileSdkVersion app.compileSdkVersion
+    buildToolsVersion app.buildToolsVersion
 
     defaultConfig {
         minSdkVersion app.minSdkVersion
@@ -31,10 +32,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api generalDeps.koin_androidx
-    api generalDeps.koin_kotlin
-    api generalDeps.koin_viewmodel
-    api generalDeps.kotlin
-    api generalDeps.coroutines
-    api generalDeps.lifecycle
+    implementation project(path: ':core')
+    implementation generalDeps.gson_converter
+    implementation generalDeps.okhttp3
+    implementation generalDeps.retrofit
 }
