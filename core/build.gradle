@@ -26,7 +26,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation generalDeps.appcompatx
     api generalDeps.koin_androidx
     api generalDeps.koin_kotlin
     api generalDeps.koin_viewmodel
