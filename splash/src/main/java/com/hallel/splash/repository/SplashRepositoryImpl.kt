@@ -1,6 +1,8 @@
 package com.hallel.splash.repository
 
-class SplashRepositoryImpl: SplashRepository {
+import com.hallel.localrepository.user.UserRepository
+
+class SplashRepositoryImpl(private val userLocalRepository: UserRepository): SplashRepository {
 
     //TODO Create repository to get data
 
@@ -13,6 +15,6 @@ class SplashRepositoryImpl: SplashRepository {
     }
 
     override suspend fun isUserValid(): Boolean {
-        return false
+        return userLocalRepository.getUser()
     }
 }

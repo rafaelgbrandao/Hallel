@@ -1,7 +1,8 @@
 package com.hallel.hallelsomevida
 
 import android.app.Application
-import com.hallel.remoteRepository.di.remoteRepositoryModule
+import com.hallel.localrepository.di.localRepositoryModule
+import com.hallel.remoterepository.di.remoteRepositoryModule
 import com.hallel.splash.di.splashModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -19,6 +20,7 @@ class App: Application() {
             modules(
                 listOf(
                     splashModule,
+                    localRepositoryModule,
                     remoteRepositoryModule
                 )
             )

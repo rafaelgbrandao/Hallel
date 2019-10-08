@@ -1,5 +1,6 @@
 package com.hallel.splash.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,11 +21,12 @@ class SplashViewModel(private val splashRepository: SplashRepository): ViewModel
     fun noUpdateFound(): LiveData<Unit> = lvUpdateNotFound
     private val lvUpdateNotFound = MutableLiveData<Unit>()
 
-    fun onSearchForUpdate() {
-        when {
+    suspend fun onSearchForUpdate() {
+        Log.v("Teste", "${splashRepository.isUserValid()}")
+        /*when {
             splashRepository.onSearchForContentUpdates() -> lvUpdateValues.postValue(Unit)
             else -> lvUpdateNotFound.postValue(Unit)
-        }
+        }*/
     }
 
     fun onAppSuggestedVersionCheck() {

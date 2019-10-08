@@ -1,2 +1,2 @@
-include ':app', ':core-ui', ':core', ':splash', ':remote-repository'
+include ':app', ':core-ui', ':core', ':splash', ':remote-repository', ':local-repository'
 rootProject.name='Hallel'

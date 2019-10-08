@@ -1,6 +1,7 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply from: "../dependencies.gradle"
 apply from: "../version.gradle"
 
@@ -9,13 +10,14 @@ android {
     buildToolsVersion app.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.hallel.hallelsomevida"
         minSdkVersion app.minSdkVersion
         targetSdkVersion app.targetSdkVersion
         versionCode app.versionCode
         versionName app.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "DATABASE_NAME", "\"hallel.db\""
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -31,21 +33,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation project(path: ':core-ui')
     implementation project(path: ':core')
-    implementation project(path: ':splash')
-    implementation project(path: ':remote-repository')
-    implementation project(path: ':local-repository')
-    implementation generalDeps.navigation
-    implementation generalDeps.navigation_ui
 
-    testImplementation testDeps.junit
-    testImplementation testDeps.koin_test
-    androidTestImplementation testDeps.runner
-    androidTestImplementation testDeps.junitx
-    androidTestImplementation testDeps.espresso
-    androidTestImplementation testDeps.rules
-    androidTestImplementation testDeps.mockk
-    androidTestImplementation testDeps.mockk_instrumented
+    implementation generalDeps.room_kotlin
+    implementation generalDeps.room
+    kapt generalDeps.room_compiler
 }
