@@ -1,18 +1,19 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply from: "../dependencies.gradle"
+apply from: "../version.gradle"
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion app.compileSdkVersion
+    buildToolsVersion app.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.hallel.hallelsomevida"
-        minSdkVersion 15
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.cnbb.hinarioliturgico"
+        minSdkVersion app.minSdkVersion
+        targetSdkVersion app.targetSdkVersion
+        versionCode app.versionCode
+        versionName app.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,10 +26,16 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    implementation project(path: ':core-ui')
+    implementation project(path: ':core')
+
+    testImplementation testDeps.junit
+    testImplementation testDeps.koin_test
+    androidTestImplementation testDeps.runner
+    androidTestImplementation testDeps.junitx
+    androidTestImplementation testDeps.espresso
+    androidTestImplementation testDeps.rules
+    androidTestImplementation testDeps.mockk
+    androidTestImplementation testDeps.mockk_instrumented
 }
