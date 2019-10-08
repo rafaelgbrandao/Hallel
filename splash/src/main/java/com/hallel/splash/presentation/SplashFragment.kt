@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.observe
+import com.hallel.core.extensions.observe
 import com.hallel.core_ui.base.BaseFragment
+import com.hallel.core_ui.extensions.gone
+import com.hallel.core_ui.extensions.visible
 import com.hallel.splash.R
+import kotlinx.android.synthetic.main.fragment_splash.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,10 +36,6 @@ class SplashFragment: BaseFragment() {
 
     private fun startObservers() {
 
-        viewModel.showUpdateProgress().observe(this) {
-            Toast.makeText(context, "Show Progress Update", Toast.LENGTH_LONG).show()
-        }
-
         viewModel.showAppUpdateDialog().observe(this) {
             showSimpleDialog(
                 title = "Nova versão disponível",
@@ -48,12 +47,28 @@ class SplashFragment: BaseFragment() {
             )
         }
 
-        viewModel.appUpToDate().observe(this) {
+        viewModel.appUpToDate().observe(this)  {
             searchForUpdates()
         }
 
         viewModel.noUpdateFound().observe(this) {
             validateUser()
+        }
+
+        viewModel.hasContentForUpdate().observe(this) { showProgress ->
+            when {
+                showProgress -> {
+                    splashProgressBarContentSearch.gone()
+                    splashProgressBarContentUpdate.visible()
+                    splashTextViewUpdateProgress.text = "Atualizando"
+                }
+                else -> validateUser()
+            }
+        }
+
+        viewModel.uptadeContentProgressBar().observe(this) { (currentProgress, maxValue) ->
+            splashProgressBarContentUpdate.max = maxValue
+            splashProgressBarContentUpdate.progress = currentProgress
         }
     }
 

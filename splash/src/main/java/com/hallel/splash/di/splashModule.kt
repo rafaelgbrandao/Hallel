@@ -10,5 +10,5 @@ val splashModule = module {
 
     viewModel { SplashViewModel(get()) }
 
-    single<SplashRepository> { SplashRepositoryImpl(get()) }
+    single<SplashRepository> { SplashRepositoryImpl(get(), get()) }
 }

@@ -7,7 +7,7 @@ class UpdateRepositoryImpl(private val updateRepository: UpdateRemoteSource): Up
         return 0
     }
 
-    override fun getUpdateContent(): List<String> {
+    override fun getUpdateContent(): List<UpdateResponse> {
         //return updateRepository.getContent()
         return emptyList()
     }

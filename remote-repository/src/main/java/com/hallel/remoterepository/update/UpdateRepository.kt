@@ -4,5 +4,5 @@ interface UpdateRepository {
 
     fun getAppVersion(): Int
 
-    fun getUpdateContent(): List<String>
+    fun getUpdateContent(): List<UpdateResponse>
 }
