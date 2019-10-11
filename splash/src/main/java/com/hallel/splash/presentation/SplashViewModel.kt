@@ -17,7 +17,7 @@ class SplashViewModel(private val splashRepository: SplashRepository): ViewModel
     fun noUpdateFound(): LiveData<Unit> = lvUpdateNotFound
     private val lvUpdateNotFound = MutableLiveData<Unit>()
 
-    fun uptadeContentProgressBar(): LiveData<Pair<Int, Int>> = lvContentUpdateProgress
+    fun updateContentProgressBar(): LiveData<Pair<Int, Int>> = lvContentUpdateProgress
     private val lvContentUpdateProgress = MutableLiveData<Pair<Int, Int>>()
 
     fun hasContentForUpdate(): LiveData<Boolean> = lvShowUpdateProgressBar

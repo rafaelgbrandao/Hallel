@@ -66,7 +66,7 @@ class SplashFragment: BaseFragment() {
             }
         }
 
-        viewModel.uptadeContentProgressBar().observe(this) { (currentProgress, maxValue) ->
+        viewModel.updateContentProgressBar().observe(this) { (currentProgress, maxValue) ->
             splashProgressBarContentUpdate.max = maxValue
             splashProgressBarContentUpdate.progress = currentProgress
         }

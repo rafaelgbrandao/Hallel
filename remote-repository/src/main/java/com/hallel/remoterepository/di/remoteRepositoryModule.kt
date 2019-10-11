@@ -1,12 +1,8 @@
 package com.hallel.remoterepository.di
 
 import com.hallel.remoterepository.factory.ServiceFactory
-import com.hallel.remoterepository.update.UpdateRemoteSource
-import com.hallel.remoterepository.update.UpdateRepository
-import com.hallel.remoterepository.update.UpdateRepositoryImpl
-import com.hallel.remoterepository.user.UserRemoteSouce
-import com.hallel.remoterepository.user.UserRepository
-import com.hallel.remoterepository.user.UserRepositoryImpl
+import com.hallel.remoterepository.source.UpdateRemoteSource
+import com.hallel.remoterepository.source.UserRemoteSouce
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -18,10 +14,6 @@ import java.util.concurrent.TimeUnit
 private const val BASE_URL = "http://www.brasilcristao.com.br/app/"
 
 val remoteRepositoryModule = module {
-
-    single { UpdateRepositoryImpl(get()) as UpdateRepository }
-
-    single { UserRepositoryImpl(get()) as UserRepository }
 
     single { ServiceFactory.createService(get(), UserRemoteSouce::class.java) }
 

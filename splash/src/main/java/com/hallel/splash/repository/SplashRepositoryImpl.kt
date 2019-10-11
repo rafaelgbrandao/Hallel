@@ -1,17 +1,16 @@
 package com.hallel.splash.repository
 
-import android.os.Handler
 import androidx.lifecycle.MutableLiveData
-import com.hallel.localrepository.user.UserRepository
-import com.hallel.remoterepository.update.UpdateRepository
+import com.hallel.remoterepository.source.UpdateRemoteSource
+import com.hallel.remoterepository.source.UserRemoteSouce
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashRepositoryImpl(
-    private val userLocalRepository: UserRepository,
-    private val updateRemoteRepository: UpdateRepository
+    private val userLocalRepository: UserRemoteSouce,
+    private val updateRemoteRepository: UpdateRemoteSource
 ): SplashRepository {
 
     //TODO Create updateLocalRepository to get data
@@ -49,10 +48,12 @@ class SplashRepositoryImpl(
     }
 
     override fun onSearchForAppVersion(): Int {
+        //return updateRemoteRepository.getAppVersion()
         return 0
     }
 
     override suspend fun isUserValid(): Boolean {
-        return userLocalRepository.getUser()
+        return false
+        //return userLocalRepository.getUser()
     }
 }
