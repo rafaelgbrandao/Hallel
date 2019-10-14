@@ -1,12 +1,15 @@
 package com.hallel.splash.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.hallel.core_ui.base.BaseViewModel
+import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
+import com.hallel.core_ui.navigation.NavigationObject
 import com.hallel.splash.BuildConfig
 import com.hallel.splash.repository.SplashRepository
 
-class SplashViewModel(private val splashRepository: SplashRepository): ViewModel() {
+class SplashViewModel(private val splashRepository: SplashRepository): BaseViewModel() {
 
     fun showAppUpdateDialog(): LiveData<Unit> = lvLastVersionNumber
     private val lvLastVersionNumber = MutableLiveData<Unit>()
@@ -38,13 +41,15 @@ class SplashViewModel(private val splashRepository: SplashRepository): ViewModel
         }
     }
 
-    suspend fun onValidateUser() =
+    suspend fun onValidateUser(screenName: String) =
         when {
             splashRepository.isUserValid() -> {
                 //TODO redirect do Home Screen
             }
             else -> {
-                //TODO redirect to Register Screen
+                lvStartNavigationFromFlow.postValue(
+                    NavigationObject(screenName)
+                )
             }
         }
 }

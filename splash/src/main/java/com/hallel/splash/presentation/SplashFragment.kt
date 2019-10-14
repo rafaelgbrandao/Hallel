@@ -78,7 +78,7 @@ class SplashFragment: BaseFragment() {
 
     private fun validateUser() {
         GlobalScope.launch {
-            viewModel.onValidateUser()
+            viewModel.onValidateUser(SplashFragment::class.java.name)
         }
     }
 }

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Register</string>
+    <string name="privacy_policy">Li e aceito a politica de privacidade</string>
+    <string name="birthday">Data de nascimento</string>
+    <string name="phone">Telefone</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="access_title">Acessar</string>
+</resources>
