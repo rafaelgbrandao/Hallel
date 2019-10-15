@@ -11,7 +11,7 @@ const val DATE_MASK = "[00]{/}[00]{/}[9900]"
 private val locale = Locale("pt", "BR")
 
 fun isValidBirthday(birthday: String): Boolean {
-    return birthday.replace("/", "").length == 8 && isDateConversionValid(birthday)
+    return birthday.replace("/", "").length == 8 && isBirthdayRangeValid(birthday)
 }
 
 fun isValidPhone(phone: String): Boolean {
@@ -26,7 +26,7 @@ fun isValidName(name: String): Boolean {
     return name.isNotEmpty() && name.length >= 2
 }
 
-private fun isDateConversionValid(
+internal fun isBirthdayRangeValid(
     date: String,
     datePattern: String = "dd/MM/yyyy",
     pattern: SimpleDateFormat = SimpleDateFormat(datePattern, locale)

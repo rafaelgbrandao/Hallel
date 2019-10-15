@@ -37,4 +37,14 @@ dependencies {
     implementation project(path: ':local-repository')
     implementation project(path: ':remote-repository')
     implementation generalDeps.inputmask
+
+    testImplementation testDeps.junit
+    testImplementation testDeps.core_testing
+    testImplementation testDeps.koin_test
+
+    androidTestImplementation testDeps.rules
+    androidTestImplementation testDeps.mockk
+    androidTestImplementation testDeps.mockk_instrumented
+    androidTestImplementation testDeps.runner
+    androidTestImplementation testDeps.espresso
 }
