@@ -1,6 +1,7 @@
 package com.hallel.hallelsomevida
 
 import android.app.Application
+import com.hallel.access.di.registerModule
 import com.hallel.hallelsomevida.di.appmodule
 import com.hallel.localrepository.di.localRepositoryModule
 import com.hallel.remoterepository.di.remoteRepositoryModule
@@ -21,6 +22,7 @@ class App: Application() {
             modules(
                 listOf(
                     appmodule,
+                    registerModule,
                     splashModule,
                     localRepositoryModule,
                     remoteRepositoryModule

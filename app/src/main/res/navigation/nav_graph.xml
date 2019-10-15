@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/accessFragment"
-        android:name="com.hallel.access.ui.AccessFragment"
+        android:name="com.hallel.access.presentation.AccessFragment"
         android:label="AccessFragment"
         tools:layout="@layout/fragment_access" />
 

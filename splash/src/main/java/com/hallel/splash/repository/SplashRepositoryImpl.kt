@@ -20,7 +20,7 @@ class SplashRepositoryImpl(
     ) {
         lvShowProgressBar.postValue(true)
         var count = 0
-        val total = 100
+        val total = 10
         CoroutineScope(Dispatchers.IO).launch {
             while (count < total) {
                 delay(500)

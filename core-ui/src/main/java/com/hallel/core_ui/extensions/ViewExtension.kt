@@ -13,14 +13,6 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
-fun TextInputEditText.setTextChangeListener(onBefore: () -> Unit = {}, onAfter: () -> Unit = {}, onChange: () -> Unit = {}) {
-    this.addTextChangedListener(
-        object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) { onAfter() }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { onBefore() }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { onChange() }
-        }
-    )
+fun TextInputEditText.getInputText(): String {
+    return this.text.toString()
 }

@@ -36,4 +36,5 @@ dependencies {
     implementation project(path: ':core-ui')
     implementation project(path: ':local-repository')
     implementation project(path: ':remote-repository')
+    implementation generalDeps.inputmask
 }

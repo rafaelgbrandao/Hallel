@@ -1,5 +1,6 @@
 package com.hallel.remoterepository.source
 
+import com.hallel.remoterepository.request.UserRequestObject
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -10,6 +11,6 @@ interface UserRemoteSouce {
     fun login(@Body userEmail: String) : Deferred<Int>
 
     @POST("Hallel/scripts/user.php")
-    fun registerNewUser(@Body userID: Int) : Deferred<Int>
+    fun registerNewUser(@Body user: UserRequestObject) : Deferred<Int>
 
 }

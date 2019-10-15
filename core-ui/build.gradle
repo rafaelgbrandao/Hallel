@@ -37,4 +37,5 @@ dependencies {
     api generalDeps.constraintlayout
     api generalDeps.cardview
     api generalDeps.material
+    implementation generalDeps.inputmask
 }
