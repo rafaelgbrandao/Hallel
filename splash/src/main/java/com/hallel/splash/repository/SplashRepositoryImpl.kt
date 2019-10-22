@@ -1,6 +1,7 @@
 package com.hallel.splash.repository
 
 import androidx.lifecycle.MutableLiveData
+import com.hallel.localrepository.user.UserRepository
 import com.hallel.remoterepository.source.UpdateRemoteSource
 import com.hallel.remoterepository.source.UserRemoteSouce
 import kotlinx.coroutines.CoroutineScope
@@ -9,7 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashRepositoryImpl(
-    private val userLocalRepository: UserRemoteSouce,
+    private val userLocalRepository: UserRepository,
     private val updateRemoteRepository: UpdateRemoteSource
 ): SplashRepository {
 
@@ -53,7 +54,6 @@ class SplashRepositoryImpl(
     }
 
     override suspend fun isUserValid(): Boolean {
-        return false
-        //return userLocalRepository.getUser()
+        return userLocalRepository.getUser()
     }
 }

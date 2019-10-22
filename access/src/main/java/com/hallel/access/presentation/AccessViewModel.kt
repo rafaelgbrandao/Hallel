@@ -28,11 +28,11 @@ class AccessViewModel(
     fun showErrorOnRegisterNewUser(): LiveData<Unit> = lvErrorOnRegisterNewUser
     private val lvErrorOnRegisterNewUser = MutableLiveData<Unit>()
 
-    fun onVerifyIfUserExist(userEmail: String) {
+    suspend fun onVerifyIfUserExist(userEmail: String) {
         if (isValidEmail(userEmail)) {
             when {
                 accessRepository.userAlreadyRegistered(userEmail) -> buildNavigation()
-                else -> lvUserNotRegistered.value = Unit
+                else -> lvUserNotRegistered.postValue(Unit)
             }
         } else {
             lvInvalidEmail.value = Unit
@@ -59,7 +59,7 @@ class AccessViewModel(
         }
     }
 
-    fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
+    suspend fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
         when {
             accessRepository.registerNewUser(name, email, phone, birthday) -> buildNavigation()
             else -> lvErrorOnRegisterNewUser.postValue(Unit)

@@ -9,8 +9,8 @@ class UserRepositoryImpl(private val userDao: UserDao): UserRepository {
         return userDao.getUser() != null
     }
 
-    override fun updateUser(user: User) {
-        return userDao.updateUser(user)
+    override fun updateUser(user: User): Boolean {
+        return userDao.updateUser(user) > 0
     }
 
     override fun deleteUser(user: User) {

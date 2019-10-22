@@ -10,7 +10,7 @@ interface UserDao {
     fun getUser(): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateUser(user: User)
+    fun updateUser(user: User): Long
 
     @Delete
     fun deleteUser(user: User)

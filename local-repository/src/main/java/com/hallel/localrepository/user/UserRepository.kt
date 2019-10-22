@@ -6,7 +6,7 @@ interface UserRepository {
 
     fun getUser(): Boolean
 
-    fun updateUser(user: User)
+    fun updateUser(user: User): Boolean
 
     fun deleteUser(user: User)
 
