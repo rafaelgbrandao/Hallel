@@ -8,7 +8,7 @@ import com.hallel.core_ui.navigation.NavigationObject
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -38,7 +38,7 @@ class AccessViewModelTest {
 
         viewModel.onVerifyIfUserExist(EMAIL)
 
-        Assert.assertEquals(Unit, viewModel.userNotRegistered().value)
+        assertEquals(Unit, viewModel.userNotRegistered().value)
 
     }
 
@@ -50,7 +50,7 @@ class AccessViewModelTest {
 
         viewModel.onVerifyIfUserExist(EMAIL)
 
-        Assert.assertEquals(
+        assertEquals(
             NavigationObject(SCREEN_NAME),
             NavigationHelper.lvStartNavigationFromFlow.value
         )
@@ -65,7 +65,7 @@ class AccessViewModelTest {
 
         viewModel.onVerifyIfUserExist(INVALID_EMAIL)
 
-        Assert.assertEquals(Unit, viewModel.showInvalidEmailMessage().value)
+        assertEquals(Unit, viewModel.showInvalidEmailMessage().value)
 
     }
 
@@ -79,7 +79,7 @@ class AccessViewModelTest {
             isPrivacyPolicyChecked = true
         )
 
-        Assert.assertEquals(Unit, viewModel.registerNewUserAfterValidateFormFields().value)
+        assertEquals(Unit, viewModel.registerNewUserAfterValidateFormFields().value)
     }
 
     @Test
@@ -92,12 +92,12 @@ class AccessViewModelTest {
             isPrivacyPolicyChecked = false
         )
 
-        Assert.assertEquals(5, viewModel.showFormErrors().value?.size)
-        Assert.assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_EMAIL))
-        Assert.assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_NAME))
-        Assert.assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_PHONE))
-        Assert.assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_BIRTHDAY))
-        Assert.assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.PRIVACY_POLICE_NOT_CHECKED))
+        assertEquals(5, viewModel.showFormErrors().value?.size)
+        assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_EMAIL))
+        assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_NAME))
+        assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_PHONE))
+        assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.INVALID_BIRTHDAY))
+        assertEquals(true, viewModel.showFormErrors().value?.contains(FormErrors.PRIVACY_POLICE_NOT_CHECKED))
     }
 
     @Test
@@ -113,7 +113,7 @@ class AccessViewModelTest {
             email = EMAIL
         )
 
-        Assert.assertEquals(
+        assertEquals(
             NavigationObject(SCREEN_NAME),
             NavigationHelper.lvStartNavigationFromFlow.value
         )
@@ -132,7 +132,7 @@ class AccessViewModelTest {
             email = EMAIL
         )
 
-        Assert.assertEquals(Unit, viewModel.showErrorOnRegisterNewUser().value)
+        assertEquals(Unit, viewModel.showErrorOnRegisterNewUser().value)
     }
 
     companion object {
