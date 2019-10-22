@@ -42,14 +42,7 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
     }
 
     suspend fun onValidateUser(screenName: String) =
-        when {
-            splashRepository.isUserValid() -> {
-                Log.v("Teste", "User Exist")
-            }
-            else -> {
-                lvStartNavigationFromFlow.postValue(
-                    NavigationObject(screenName)
-                )
-            }
-        }
+        lvStartNavigationFromFlow.postValue(
+            NavigationObject(screenName, splashRepository.isUserValid())
+        )
 }

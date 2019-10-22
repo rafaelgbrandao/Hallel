@@ -1,7 +1,6 @@
 package com.hallel.hallelsomevida
 
 import android.os.Bundle
-import android.util.Log
 import androidx.navigation.findNavController
 import com.hallel.core.extensions.observe
 import com.hallel.core_ui.base.BaseActivity
@@ -24,7 +23,7 @@ class MainActivity: BaseActivity() {
         }
 
         viewModel.startNavigationFromFlow().observe(this) {
-            when (val navId = getNavigationId(it.screenName)) {
+            when (val navId = getNavigationId(it)) {
                 0 -> showToast("No id")
                 else -> findNavController(R.id.nav_host_fragment).navigate(navId)
             }
