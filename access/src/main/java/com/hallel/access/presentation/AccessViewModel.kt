@@ -19,8 +19,11 @@ class AccessViewModel(
     fun showInvalidEmailMessage(): LiveData<Unit> = lvInvalidEmail
     private val lvInvalidEmail = MutableLiveData<Unit>()
 
-    fun showFormErrors(): LiveData<List<FormErrors>> = lvValidateFields
-    private val lvValidateFields = MutableLiveData<List<FormErrors>>()
+    fun showFormErrors(): LiveData<List<FormErrors>> = lvFormFieldsHasError
+    private val lvFormFieldsHasError = MutableLiveData<List<FormErrors>>()
+
+    fun registerNewUserAfterValidateFormFields(): LiveData<Unit> = lvFormFieldsAreValid
+    private val lvFormFieldsAreValid = MutableLiveData<Unit>()
 
     fun showErrorOnRegisterNewUser(): LiveData<Unit> = lvErrorOnRegisterNewUser
     private val lvErrorOnRegisterNewUser = MutableLiveData<Unit>()
@@ -51,12 +54,12 @@ class AccessViewModel(
             if (!isPrivacyPolicyChecked) add(FormErrors.PRIVACY_POLICE_NOT_CHECKED)
         }.toList()
         when {
-            errorList.isEmpty() -> registerNewUser(name, email, phone, birthday)
-            else -> lvValidateFields.postValue(errorList)
+            errorList.isEmpty() -> lvFormFieldsAreValid.postValue(Unit)
+            else -> lvFormFieldsHasError.postValue(errorList)
         }
     }
 
-    private fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
+    fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
         when {
             accessRepository.registerNewUser(name, email, phone, birthday) -> buildNavigation()
             else -> lvErrorOnRegisterNewUser.postValue(Unit)

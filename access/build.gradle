@@ -43,8 +43,8 @@ dependencies {
     testImplementation testDeps.koin_test
 
     androidTestImplementation testDeps.rules
-    androidTestImplementation testDeps.mockk
-    androidTestImplementation testDeps.mockk_instrumented
+    testImplementation testDeps.mockk
+    testImplementation testDeps.mockk_instrumented
     androidTestImplementation testDeps.runner
     androidTestImplementation testDeps.espresso
 }

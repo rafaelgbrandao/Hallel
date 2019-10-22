@@ -37,24 +37,4 @@ dependencies {
     api generalDeps.kotlin
     api generalDeps.coroutines
     api generalDeps.lifecycle
-
-    /*testApi testDeps.junit
-    testApi testDeps.core_testing
-    testApi testDeps.koin_test
-
-    androidTestApi testDeps.rules
-    androidTestApi testDeps.mockk
-    androidTestApi testDeps.mockk_instrumented
-    androidTestApi testDeps.runner
-    androidTestApi testDeps.espresso*/
-
-    testImplementation testDeps.junit
-    testImplementation testDeps.core_testing
-    testImplementation testDeps.koin_test
-
-    androidTestImplementation testDeps.rules
-    androidTestImplementation testDeps.mockk
-    androidTestImplementation testDeps.mockk_instrumented
-    androidTestImplementation testDeps.runner
-    androidTestImplementation testDeps.espresso
 }

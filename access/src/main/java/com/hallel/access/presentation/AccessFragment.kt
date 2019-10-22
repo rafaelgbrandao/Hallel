@@ -78,6 +78,15 @@ class AccessFragment: BaseFragment() {
         viewModel.showErrorOnRegisterNewUser().observe(this) {
             showToast(getString(R.string.fail_on_register_new_user))
         }
+
+        viewModel.registerNewUserAfterValidateFormFields().observe(this) {
+            viewModel.registerNewUser(
+                name = accessTxtInputEditTextName.getInputText(),
+                email = accessTxtInputEditTextEmail.getInputText(),
+                phone = accessTxtInputEditTextPhone.getInputText(),
+                birthday = accessTxtInputEditTextBirthday.getInputText()
+            )
+        }
     }
 
     private fun setSendButtonListener(listener: () -> Unit) {
