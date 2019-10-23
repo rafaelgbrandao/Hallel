@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 
 object NavigationHelper {
 
+    val lvStartNavigationFromDeepLink = MutableLiveData<String>()
+
     val lvStartNavigationFromFlow = MutableLiveData<NavigationObject>()
 
     val lvStartNavigationFromClick = MutableLiveData<@IdRes Int>()
