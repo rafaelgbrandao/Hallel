@@ -6,10 +6,10 @@ import com.hallel.localrepository.entity.Participant
 @Dao
 interface ParticipantDao {
 
-    @Query("Select * from ${Participant.TABLE_PARTICIPANT}")
+    @Query("Select * from ${Participant.TABLE_NAME}")
     fun getSingleParticipant(): Participant
 
-    @Query("Select * from ${Participant.TABLE_PARTICIPANT} where ${Participant.COLUMN_PARTICIPANT_ID} = (:ids)")
+    @Query("Select * from ${Participant.TABLE_NAME} where ${Participant.COLUMN_ID} = (:ids)")
     fun getParticipants(ids: List<String>): List<Participant>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
