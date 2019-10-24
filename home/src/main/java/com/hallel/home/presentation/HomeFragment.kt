@@ -35,6 +35,7 @@ class HomeFragment: BaseFragment() {
         initObservers()
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.onLoadPartners()
+            viewModel.onLoadParticipants()
         }
     }
 
@@ -50,6 +51,14 @@ class HomeFragment: BaseFragment() {
 
         viewModel.showSponsorsError().observe(this) {
             homeRVSponsors.gone()
+        }
+
+        viewModel.setParticipantsAdapter().observe(this) {
+            homeRVParticipants.adapter = HomeParticipantsAdapter(it)
+        }
+
+        viewModel.showParticipantsError().observe(this) {
+            homeRVParticipants.gone()
         }
     }
 }
