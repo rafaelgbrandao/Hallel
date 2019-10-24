@@ -9,7 +9,7 @@ import com.hallel.localrepository.entity.Participant
 import com.hallel.localrepository.entity.Partner
 import com.hallel.localrepository.entity.User
 
-@Database(entities = [User::class, Partner::class, Participant::class], version = 3)
+@Database(entities = [User::class, Partner::class, Participant::class], version = 1)
 
 abstract class HallelDatabase: RoomDatabase() {
 

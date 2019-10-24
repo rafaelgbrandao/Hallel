@@ -13,7 +13,7 @@ data class Partner(
 ) {
 
     companion object {
-        const val TABLE_PARTNER= "Partner"
+        const val TABLE_PARTNER= "partner"
         const val COLUMN_PARTNER_ID = "id"
         const val COLUMN_PARTNER_NAME = "name"
         const val COLUMN_PARTNER_LINK = "link"

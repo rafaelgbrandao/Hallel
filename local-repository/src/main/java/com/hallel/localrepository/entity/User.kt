@@ -15,7 +15,7 @@ data class User(
 ) {
 
     companion object {
-        const val TABLE_USER= "User"
+        const val TABLE_USER= "user"
         const val COLUMN_USER_ID = "id"
         const val COLUMN_USER_NAME = "name"
         const val COLUMN_USER_EMAIL = "email"
