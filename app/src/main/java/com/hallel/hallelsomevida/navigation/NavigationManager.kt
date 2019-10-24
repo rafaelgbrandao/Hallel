@@ -1,6 +1,7 @@
 package com.hallel.hallelsomevida.navigation
 
 import android.util.Log
+import com.hallel.access.presentation.AccessFragment
 import com.hallel.core_ui.navigation.NavigationObject
 import com.hallel.hallelsomevida.R
 import com.hallel.home.presentation.HomeParticipantsAdapter
@@ -12,8 +13,8 @@ object NavigationManager {
     fun getNavigationId(navigationObject: NavigationObject): Int {
         return when (navigationObject.screenName) {
             SplashFragment::class.java.name -> handleSplashExtra(navigationObject.extras as Boolean)
+            AccessFragment::class.java.name -> R.id.action_accessFragment_to_homeFragment
             HomeParticipantsAdapter::class.java.name -> handleHomeAdapterExtra(navigationObject.extras as Participant)
-            //AccessFragment::class.java.name ->
             else -> 0
         }
     }
