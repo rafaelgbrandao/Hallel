@@ -6,7 +6,7 @@ import com.hallel.localrepository.entity.User
 @Dao
 interface UserDao {
 
-    @Query("Select * from ${User.TABLE_USER}")
+    @Query("Select * from ${User.TABLE_NAME}")
     fun getUser(): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

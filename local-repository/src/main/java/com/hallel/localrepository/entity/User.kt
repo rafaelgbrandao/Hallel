@@ -4,23 +4,23 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = User.TABLE_USER)
+@Entity(tableName = User.TABLE_NAME)
 data class User(
-    @PrimaryKey @ColumnInfo(name = COLUMN_USER_ID) val userId: Int,
-    @ColumnInfo(name = COLUMN_USER_NAME) val userName: String,
-    @ColumnInfo(name = COLUMN_USER_EMAIL) val userEmail: String,
-    @ColumnInfo(name = COLUMN_USER_PHONE) val userPhone: String,
-    @ColumnInfo(name = COLUMN_USER_BIRTHDAY) val userBirthday: String,
-    @ColumnInfo(name = COLUMN_USER_IS_SENT) val isSent: Int
+    @PrimaryKey @ColumnInfo(name = COLUMN_ID) val userId: Int,
+    @ColumnInfo(name = COLUMN_NAME) val userName: String,
+    @ColumnInfo(name = COLUMN_EMAIL) val userEmail: String,
+    @ColumnInfo(name = COLUMN_PHONE) val userPhone: String,
+    @ColumnInfo(name = COLUMN_BIRTHDAY) val userBirthday: String,
+    @ColumnInfo(name = COLUMN_IS_SENT) val isSent: Int
 ) {
 
     companion object {
-        const val TABLE_USER= "user"
-        const val COLUMN_USER_ID = "id"
-        const val COLUMN_USER_NAME = "name"
-        const val COLUMN_USER_EMAIL = "email"
-        const val COLUMN_USER_PHONE = "phone"
-        const val COLUMN_USER_BIRTHDAY = "birthday"
-        const val COLUMN_USER_IS_SENT = "isSent"
+        const val TABLE_NAME= "user"
+        const val COLUMN_ID = "id"
+        const val COLUMN_NAME = "name"
+        const val COLUMN_EMAIL = "email"
+        const val COLUMN_PHONE = "phone"
+        const val COLUMN_BIRTHDAY = "birthday"
+        const val COLUMN_IS_SENT = "isSent"
     }
 }
