@@ -7,7 +7,7 @@ import com.hallel.localrepository.entity.*
 
 @Suppress("SpellCheckingInspection")
 @Database(
-    entities = [User::class, Partner::class, Participant::class, Event::class, EventContent::class],
+    entities = [User::class, Partner::class, Participant::class, Event::class, EventContent::class, Menu::class],
     version = 1
 )
 
@@ -22,4 +22,6 @@ abstract class HallelDatabase : RoomDatabase() {
     abstract fun eventDao(): EventDao
 
     abstract fun eventContentDao(): EventContentDao
+
+    abstract fun menuDao(): MenuDao
 }
