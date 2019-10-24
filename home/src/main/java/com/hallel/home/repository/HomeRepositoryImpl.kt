@@ -1,24 +1,40 @@
 package com.hallel.home.repository
 
+import com.hallel.localrepository.dao.EventContentDao
 import com.hallel.localrepository.dao.ParticipantDao
 import com.hallel.localrepository.dao.PartnerDao
+import com.hallel.localrepository.entity.EventContent
 import com.hallel.localrepository.entity.Participant
 import com.hallel.localrepository.entity.Partner
 
 class HomeRepositoryImpl(
-    private val partnerLocalRepository: PartnerDao,
-    private val participantLocalRepository: ParticipantDao
+    private val partnerDao: PartnerDao,
+    private val participantDao: ParticipantDao,
+    private val eventContentDao: EventContentDao
 ): HomeRepository {
+
+    override suspend fun getEventContent(eventId: Int): EventContent? {
+        return mockEventContent()
+        //return eventContentDao.getEventContent(eventId)
+    }
 
     override suspend fun getEventParticipants(): List<Participant> {
         return mockParticipantList()
-        //return participantLocalRepository.getParticipants(eventParticipants)
+        //return participantDao.getParticipants(eventParticipants)
     }
 
     override suspend fun getPartners(): List<Partner> {
         return mockPartnerList()
-        //return partnerLocalRepository.getAllPartners()
+        //return partnerDao.getAllPartners()
     }
+
+
+    private fun mockEventContent() = EventContent(
+        id = 1,
+        eventId = 1,
+        eventTitle = "Title",
+        eventSubtitle = "Subtitle"
+    )
 
     private fun mockPartnerList() = listOf(
         Partner(

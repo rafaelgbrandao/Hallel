@@ -20,6 +20,10 @@ class HomeFragment: BaseFragment() {
 
     private val viewModel by viewModel<HomeViewModel>()
 
+    private val eventId by lazy {
+        arguments?.getInt("EVENT_ID") ?: 1
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,8 +38,7 @@ class HomeFragment: BaseFragment() {
         configureViews()
         initObservers()
         CoroutineScope(Dispatchers.IO).launch {
-            viewModel.onLoadPartners()
-            viewModel.onLoadParticipants()
+            viewModel.onLoadEventContent(eventId)
         }
     }
 
@@ -59,6 +62,21 @@ class HomeFragment: BaseFragment() {
 
         viewModel.showParticipantsError().observe(this) {
             homeRVParticipants.gone()
+        }
+
+        viewModel.showEventNotAvailableMessage().observe(this) {
+            showToast("No message available")
+            homeRVParticipants.gone()
+            homeRVSponsors.gone()
+        }
+
+        viewModel.eventIsAvailable().observe(this) {
+            homeTxtLogo.text = it.eventTitle
+            homeTxtSubtitle.text = it.eventSubtitle
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.onLoadPartners()
+                viewModel.onLoadParticipants()
+            }
         }
     }
 }

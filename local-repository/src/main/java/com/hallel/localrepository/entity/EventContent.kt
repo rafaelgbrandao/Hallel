@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = EventContent.TABLE_NAME)
 data class EventContent(
     @PrimaryKey @ColumnInfo(name = COLUMN_ID) val id: Int,
-    @ColumnInfo(name = COLUMN_EVENT_ID) val name: Int,
-    @ColumnInfo(name = COLUMN_EVENT_TITLE) val eventTitle: String,
-    @ColumnInfo(name = COLUMN_EVENT_SUBTITLE) val eventSubtitle: String,
-    @ColumnInfo(name = COLUMN_MENU_ITEMS) val menuItems: String,
-    @ColumnInfo(name = COLUMN_SPONSORS) val sponsors: String
+    @ColumnInfo(name = COLUMN_EVENT_ID) val eventId: Int? = null,
+    @ColumnInfo(name = COLUMN_EVENT_TITLE) val eventTitle: String? = null,
+    @ColumnInfo(name = COLUMN_EVENT_SUBTITLE) val eventSubtitle: String? = null,
+    @ColumnInfo(name = COLUMN_MENU_ITEMS) val menuItems: String? = null,
+    @ColumnInfo(name = COLUMN_SPONSORS) val sponsors: String? = null
 ) {
 
     companion object {

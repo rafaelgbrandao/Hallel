@@ -8,11 +8,11 @@ import com.hallel.localrepository.entity.EventContent
 interface EventContentDao {
 
     @Query("Select * from ${EventContent.TABLE_NAME} where ${EventContent.COLUMN_EVENT_ID} = :eventId")
-    fun getEventContent(eventId: Int): Event
+    fun getEventContent(eventId: Int): EventContent
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateEvent(event: Event): Long
+    fun updateEvent(eventContent: EventContent): Long
 
     @Delete
-    fun deleteEvent(event: Event)
+    fun deleteEvent(eventContent: EventContent)
 }

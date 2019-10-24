@@ -15,6 +15,6 @@ val homeModule = module {
 
     single { HomeViewModel(get(), get(named(name = SCREEN_NAME))) }
 
-    single { HomeRepositoryImpl(get(), get()) as HomeRepository }
+    single { HomeRepositoryImpl(get(), get(), get()) as HomeRepository }
 
 }

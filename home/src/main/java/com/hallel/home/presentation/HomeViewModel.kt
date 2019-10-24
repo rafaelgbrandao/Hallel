@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hallel.core_ui.base.BaseViewModel
 import com.hallel.home.repository.HomeRepository
+import com.hallel.localrepository.entity.Event
+import com.hallel.localrepository.entity.EventContent
 import com.hallel.localrepository.entity.Participant
 import com.hallel.localrepository.entity.Partner
 
@@ -24,6 +26,12 @@ class HomeViewModel(
     fun showParticipantsError(): LiveData<Unit> = lvParticipantsListError
     private val lvParticipantsListError = MutableLiveData<Unit>()
 
+    fun eventIsAvailable(): LiveData<EventContent> = lvEventAvailable
+    private val lvEventAvailable = MutableLiveData<EventContent>()
+
+    fun showEventNotAvailableMessage(): LiveData<Unit> = lvEventNotAvailable
+    private val lvEventNotAvailable = MutableLiveData<Unit>()
+
     suspend fun onLoadPartners() {
         val partnerList = homeRepository.getPartners()
         when {
@@ -38,5 +46,11 @@ class HomeViewModel(
             participantList.isEmpty() -> lvParticipantsListError.postValue(Unit)
             else -> lvParticipantsList.postValue(participantList)
         }
+    }
+
+    suspend fun onLoadEventContent(eventId: Int) {
+        homeRepository.getEventContent(eventId)?.let {
+            lvEventAvailable.postValue(it)
+        } ?: lvEventNotAvailable.postValue(Unit)
     }
 }
