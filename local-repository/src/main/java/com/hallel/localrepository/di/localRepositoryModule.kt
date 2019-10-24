@@ -24,5 +24,7 @@ val localRepositoryModule = module {
 
     single { get<HallelDatabase>().eventContentDao() }
 
+    single { get<HallelDatabase>().menuDao() }
+
     single<UserRepository>{ UserRepositoryImpl(get()) }
 }
