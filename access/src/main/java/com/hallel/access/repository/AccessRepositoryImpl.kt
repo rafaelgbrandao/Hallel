@@ -1,7 +1,7 @@
 package com.hallel.access.repository
 
+import com.hallel.localrepository.dao.UserDao
 import com.hallel.localrepository.entity.User
-import com.hallel.localrepository.user.UserRepository
 import com.hallel.remoterepository.request.UserRequestObject
 import com.hallel.remoterepository.source.UserRemoteSouce
 import kotlinx.coroutines.*
@@ -11,7 +11,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class AccessRepositoryImpl(
     private val userRemoteSource: UserRemoteSouce,
-    private val userLocalRepository: UserRepository
+    private val userLocalRepository: UserDao
 ) : AccessRepository {
 
     override suspend fun registerNewUser(name: String, email: String, phone: String, birthday: String): Boolean {
@@ -36,7 +36,7 @@ class AccessRepositoryImpl(
 
     private suspend fun saveNewUserLocal(newUser: User): Boolean {
         return suspendCoroutine {
-            it.resume(userLocalRepository.updateUser(newUser))
+            it.resume(userLocalRepository.updateUser(newUser) > 0)
         }
     }
 
