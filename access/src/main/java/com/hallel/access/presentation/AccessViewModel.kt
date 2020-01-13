@@ -35,7 +35,7 @@ class AccessViewModel(
                 else -> lvUserNotRegistered.postValue(Unit)
             }
         } else {
-            lvInvalidEmail.value = Unit
+            lvInvalidEmail.postValue(Unit)
         }
     }
 
