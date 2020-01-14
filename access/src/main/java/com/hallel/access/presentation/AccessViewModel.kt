@@ -8,6 +8,7 @@ import com.hallel.core.utils.Event
 import com.hallel.core_ui.base.BaseViewModel
 import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
+import kotlinx.coroutines.launch
 
 class AccessViewModel(
     private val accessRepository: AccessRepository,
@@ -29,14 +30,16 @@ class AccessViewModel(
     fun showErrorOnRegisterNewUser(): LiveData<Unit> = lvErrorOnRegisterNewUser
     private val lvErrorOnRegisterNewUser = MutableLiveData<Unit>()
 
-    suspend fun onVerifyIfUserExist(userEmail: String) {
-        if (isValidEmail(userEmail)) {
-            when {
-                accessRepository.userAlreadyRegistered(userEmail) -> buildNavigation()
-                else -> lvUserNotRegistered.postValue(Unit)
+    fun onVerifyIfUserExist(userEmail: String) {
+        coroutineScopeIO.launch {
+            if (isValidEmail(userEmail)) {
+                when {
+                    accessRepository.userAlreadyRegistered(userEmail) -> buildNavigation()
+                    else -> lvUserNotRegistered.postValue(Unit)
+                }
+            } else {
+                lvInvalidEmail.postValue(Unit)
             }
-        } else {
-            lvInvalidEmail.postValue(Unit)
         }
     }
 
@@ -60,10 +63,12 @@ class AccessViewModel(
         }
     }
 
-    suspend fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
-        when {
-            accessRepository.registerNewUser(name, email, phone, birthday) -> buildNavigation()
-            else -> lvErrorOnRegisterNewUser.postValue(Unit)
+    fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
+        coroutineScopeIO.launch {
+            when {
+                accessRepository.registerNewUser(name, email, phone, birthday) -> buildNavigation()
+                else -> lvErrorOnRegisterNewUser.postValue(Unit)
+            }
         }
     }
 

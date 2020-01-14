@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.hallel.core.extensions.observe
 import com.hallel.core_ui.base.BaseFragment
 import com.hallel.core_ui.extensions.gone
 import com.hallel.home.R
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeFragment: BaseFragment() {
@@ -37,9 +33,7 @@ class HomeFragment: BaseFragment() {
         setActionBarVisible(true)
         configureViews()
         initObservers()
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel.onLoadEventContent(eventId)
-        }
+        viewModel.onLoadEventContent(eventId)
     }
 
     private fun configureViews() {
@@ -73,10 +67,8 @@ class HomeFragment: BaseFragment() {
         viewModel.eventIsAvailable().observe(this) {
             homeTxtLogo.text = it.eventTitle
             homeTxtSubtitle.text = it.eventSubtitle
-            CoroutineScope(Dispatchers.IO).launch {
-                viewModel.onLoadPartners()
-                viewModel.onLoadParticipants()
-            }
+            viewModel.onLoadPartners()
+            viewModel.onLoadParticipants()
         }
     }
 }

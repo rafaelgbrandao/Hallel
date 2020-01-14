@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hallel.core_ui.base.BaseViewModel
 import com.hallel.home.repository.HomeRepository
-import com.hallel.localrepository.entity.Event
 import com.hallel.localrepository.entity.EventContent
 import com.hallel.localrepository.entity.Participant
 import com.hallel.localrepository.entity.Partner
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val homeRepository: HomeRepository,
@@ -32,25 +32,31 @@ class HomeViewModel(
     fun showEventNotAvailableMessage(): LiveData<Unit> = lvEventNotAvailable
     private val lvEventNotAvailable = MutableLiveData<Unit>()
 
-    suspend fun onLoadPartners() {
-        val partnerList = homeRepository.getPartners()
-        when {
-            partnerList.isEmpty() -> lvSponsorsListError.postValue(Unit)
-            else -> lvSponsorsList.postValue(partnerList)
+    fun onLoadPartners() {
+        coroutineScopeIO.launch {
+            val partnerList = homeRepository.getPartners()
+            when {
+                partnerList.isEmpty() -> lvSponsorsListError.postValue(Unit)
+                else -> lvSponsorsList.postValue(partnerList)
+            }
         }
     }
 
-    suspend fun onLoadParticipants() {
-        val participantList = homeRepository.getEventParticipants()
-        when {
-            participantList.isEmpty() -> lvParticipantsListError.postValue(Unit)
-            else -> lvParticipantsList.postValue(participantList)
+    fun onLoadParticipants() {
+        coroutineScopeIO.launch {
+            val participantList = homeRepository.getEventParticipants()
+            when {
+                participantList.isEmpty() -> lvParticipantsListError.postValue(Unit)
+                else -> lvParticipantsList.postValue(participantList)
+            }
         }
     }
 
-    suspend fun onLoadEventContent(eventId: Int) {
-        homeRepository.getEventContent(eventId)?.let {
-            lvEventAvailable.postValue(it)
-        } ?: lvEventNotAvailable.postValue(Unit)
+    fun onLoadEventContent(eventId: Int) {
+        coroutineScopeIO.launch {
+            homeRepository.getEventContent(eventId)?.let {
+                lvEventAvailable.postValue(it)
+            } ?: lvEventNotAvailable.postValue(Unit)
+        }
     }
 }

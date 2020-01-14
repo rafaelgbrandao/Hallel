@@ -1,10 +1,17 @@
 package com.hallel.core_ui.base
 
-import androidx.annotation.IdRes
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hallel.core_ui.navigation.NavigationObject
+import kotlinx.coroutines.*
 
-open class BaseViewModel: ViewModel() {
+open class BaseViewModel(
+    private val dispatchers: Dispatchers = Dispatchers,
+    private val job: Job = SupervisorJob()): ViewModel() {
 
+    val coroutineScopeIO = CoroutineScope(dispatchers.IO + job)
+    val coroutineScopeMain = CoroutineScope(dispatchers.Main + job)
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancelChildren()
+    }
 }

@@ -15,9 +15,6 @@ import com.hallel.core_ui.extensions.getInputText
 import com.hallel.core_ui.extensions.setTextChangeListener
 import com.hallel.core_ui.extensions.visible
 import kotlinx.android.synthetic.main.fragment_access.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AccessFragment: BaseFragment() {
@@ -37,9 +34,7 @@ class AccessFragment: BaseFragment() {
         initFields()
         initObservers()
         setSendButtonListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                viewModel.onVerifyIfUserExist(userEmail = accessTxtInputEditTextEmail.getInputText())
-            }
+            viewModel.onVerifyIfUserExist(userEmail = accessTxtInputEditTextEmail.getInputText())
         }
     }
 
@@ -85,14 +80,12 @@ class AccessFragment: BaseFragment() {
         }
 
         viewModel.registerNewUserAfterValidateFormFields().observe(this) {
-            CoroutineScope(Dispatchers.IO).launch {
-                viewModel.registerNewUser(
-                    name = accessTxtInputEditTextName.getInputText(),
-                    email = accessTxtInputEditTextEmail.getInputText(),
-                    phone = accessTxtInputEditTextPhone.getInputText(),
-                    birthday = accessTxtInputEditTextBirthday.getInputText()
-                )
-            }
+            viewModel.registerNewUser(
+                name = accessTxtInputEditTextName.getInputText(),
+                email = accessTxtInputEditTextEmail.getInputText(),
+                phone = accessTxtInputEditTextPhone.getInputText(),
+                birthday = accessTxtInputEditTextBirthday.getInputText()
+            )
         }
     }
 

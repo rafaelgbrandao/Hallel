@@ -14,20 +14,19 @@ class SplashRepositoryImpl(
 ): SplashRepository {
 
     //TODO Create updateLocalRepository to get data
-    override fun onSearchForContentUpdates(
+    override suspend fun onSearchForContentUpdates(
         lvShowProgressBar: MutableLiveData<Boolean>,
         lvProgressValue: MutableLiveData<Pair<Int, Int>>
     ) {
         lvShowProgressBar.postValue(true)
         var count = 0
         val total = 10
-        CoroutineScope(Dispatchers.IO).launch {
-            while (count < total) {
-                delay(500)
-                count += 5
-                lvProgressValue.postValue(Pair(count, total))
-            }
-            lvShowProgressBar.postValue(false)
+        while (count < total) {
+            delay(500)
+            count += 5
+            lvProgressValue.postValue(Pair(count, total))
+        }
+        lvShowProgressBar.postValue(false)
             /*val content = updateRemoteRepository.getUpdateContent()
             when {
                 content.isNotEmpty() -> {
@@ -44,7 +43,6 @@ class SplashRepositoryImpl(
                 }
                 else -> lvShowProgressBar.postValue(false)
             }*/
-        }
     }
 
     override fun onSearchForAppVersion(): Int {

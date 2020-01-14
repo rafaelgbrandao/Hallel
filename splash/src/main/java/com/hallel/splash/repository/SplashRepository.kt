@@ -6,7 +6,7 @@ interface SplashRepository {
 
     fun onSearchForAppVersion(): Int
 
-    fun onSearchForContentUpdates(
+    suspend fun onSearchForContentUpdates(
         lvShowProgressBar: MutableLiveData<Boolean>,
         lvProgressValue: MutableLiveData<Pair<Int, Int>>
     )

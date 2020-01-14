@@ -11,8 +11,6 @@ import com.hallel.core_ui.extensions.gone
 import com.hallel.core_ui.extensions.visible
 import com.hallel.splash.R
 import kotlinx.android.synthetic.main.fragment_splash.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment: BaseFragment() {
@@ -73,12 +71,12 @@ class SplashFragment: BaseFragment() {
     }
 
     private fun searchForUpdates() {
-        GlobalScope.launch { viewModel.onSearchForUpdate() }
+        context?.let {
+            viewModel.onSearchForUpdate()
+        }
     }
 
     private fun validateUser() {
-        GlobalScope.launch {
-            viewModel.onValidateUser(SplashFragment::class.java.name)
-        }
+        viewModel.onValidateUser(SplashFragment::class.java.name)
     }
 }

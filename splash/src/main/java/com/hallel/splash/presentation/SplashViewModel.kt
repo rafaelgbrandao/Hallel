@@ -8,8 +8,11 @@ import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
 import com.hallel.splash.BuildConfig
 import com.hallel.splash.repository.SplashRepository
+import kotlinx.coroutines.launch
 
-class SplashViewModel(private val splashRepository: SplashRepository): BaseViewModel() {
+class SplashViewModel(
+    private val splashRepository: SplashRepository
+): BaseViewModel() {
 
     fun showAppUpdateDialog(): LiveData<Unit> = lvLastVersionNumber
     private val lvLastVersionNumber = MutableLiveData<Unit>()
@@ -27,10 +30,12 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
     private val lvShowUpdateProgressBar = MutableLiveData<Boolean>()
 
     fun onSearchForUpdate() {
-        splashRepository.onSearchForContentUpdates(
-            lvShowProgressBar = lvShowUpdateProgressBar,
-            lvProgressValue = lvContentUpdateProgress
-        )
+        coroutineScopeIO.launch {
+            splashRepository.onSearchForContentUpdates(
+                lvShowProgressBar = lvShowUpdateProgressBar,
+                lvProgressValue = lvContentUpdateProgress
+            )
+        }
     }
 
     fun onAppSuggestedVersionCheck() {
@@ -41,10 +46,10 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
         }
     }
 
-    suspend fun onValidateUser(screenName: String) =
-        lvStartNavigationFromFlow.postValue(
-            Event(
-                NavigationObject(screenName, splashRepository.isUserValid())
+    fun onValidateUser(screenName: String) =
+        coroutineScopeIO.launch {
+            lvStartNavigationFromFlow.postValue(
+                Event(NavigationObject(screenName, splashRepository.isUserValid()))
             )
-        )
+        }
 }
