@@ -1,8 +1,8 @@
 package com.hallel.splash.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.hallel.core.utils.Event
 import com.hallel.core_ui.base.BaseViewModel
 import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
@@ -43,6 +43,8 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
 
     suspend fun onValidateUser(screenName: String) =
         lvStartNavigationFromFlow.postValue(
-            NavigationObject(screenName, splashRepository.isUserValid())
+            Event(
+                NavigationObject(screenName, splashRepository.isUserValid())
+            )
         )
 }

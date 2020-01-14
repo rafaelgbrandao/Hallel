@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hallel.access.helper.*
 import com.hallel.access.repository.AccessRepository
+import com.hallel.core.utils.Event
 import com.hallel.core_ui.base.BaseViewModel
 import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
@@ -67,6 +68,6 @@ class AccessViewModel(
     }
 
     private fun buildNavigation() {
-        lvStartNavigationFromFlow.postValue(NavigationObject(screenName = screenName))
+        lvStartNavigationFromFlow.postValue(Event(NavigationObject(screenName = screenName)))
     }
 }

@@ -8,15 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.hallel.core_ui.navigation.NavigationHelper
-import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromClick
-import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromDeepLink
+import com.hallel.core.utils.Event
 import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
 import com.hallel.home.R
 import com.hallel.localrepository.entity.Participant
 import kotlinx.android.synthetic.main.item_participant.view.*
-import kotlinx.android.synthetic.main.item_sponsor.view.*
 
 class HomeParticipantsAdapter(private val participantList: List<Participant>) :
     RecyclerView.Adapter<HomeParticipantsAdapter.CustomHolder>() {
@@ -54,9 +51,11 @@ class HomeParticipantsAdapter(private val participantList: List<Participant>) :
         fun bind(participant: Participant) {
             itemView.setOnClickListener {
                 lvStartNavigationFromFlow.value =
-                    NavigationObject(
-                        screenName = HomeParticipantsAdapter::class.java.name,
-                        extras = participant
+                    Event(
+                        NavigationObject(
+                            screenName = HomeParticipantsAdapter::class.java.name,
+                            extras = participant
+                        )
                     )
             }
         }

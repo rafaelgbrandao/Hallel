@@ -3,6 +3,7 @@ package com.hallel.core.extensions
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.hallel.core.utils.Event
 
 inline fun <T> LiveData<T>.observe(
     owner: LifecycleOwner,
@@ -10,4 +11,13 @@ inline fun <T> LiveData<T>.observe(
 ): LiveData<T> {
     observe(owner, Observer<T> { result -> result?.let { observer(it) } })
     return this
+}
+
+inline fun <T> LiveData<Event<T>>.singleObserve(
+    owner: LifecycleOwner,
+    crossinline onEventUnhandledContent: (T) -> Unit
+) {
+    observe(owner, Observer {
+            result -> result?.getContentIfNotHandled()?.let { onEventUnhandledContent(it) }
+    })
 }

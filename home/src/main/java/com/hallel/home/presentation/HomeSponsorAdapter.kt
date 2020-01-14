@@ -1,13 +1,13 @@
 package com.hallel.home.presentation
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.hallel.core.utils.Event
 import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromDeepLink
 import com.hallel.home.R
 import com.hallel.localrepository.entity.Partner
@@ -47,7 +47,7 @@ class HomeSponsorAdapter(private val sponsorList: List<Partner>) :
 
         fun bind(link: String) {
             itemView.setOnClickListener {
-                lvStartNavigationFromDeepLink.value = link
+                lvStartNavigationFromDeepLink.value = Event(link)
             }
         }
     }
