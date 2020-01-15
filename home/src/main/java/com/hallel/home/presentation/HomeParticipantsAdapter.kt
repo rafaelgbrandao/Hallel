@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hallel.core.utils.Event
-import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
+import com.hallel.core_ui.helpers.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
 import com.hallel.home.R
 import com.hallel.localrepository.entity.Participant

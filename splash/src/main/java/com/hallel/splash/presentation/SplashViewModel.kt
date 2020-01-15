@@ -4,15 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hallel.core.utils.Event
 import com.hallel.core_ui.base.BaseViewModel
-import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
+import com.hallel.core_ui.helpers.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
 import com.hallel.splash.BuildConfig
 import com.hallel.splash.repository.SplashRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class SplashViewModel(
-    private val splashRepository: SplashRepository
-): BaseViewModel() {
+class SplashViewModel(private val splashRepository: SplashRepository): BaseViewModel() {
 
     fun showAppUpdateDialog(): LiveData<Unit> = lvLastVersionNumber
     private val lvLastVersionNumber = MutableLiveData<Unit>()
@@ -31,10 +30,11 @@ class SplashViewModel(
 
     fun onSearchForUpdate() {
         coroutineScopeIO.launch {
-            splashRepository.onSearchForContentUpdates(
-                lvShowProgressBar = lvShowUpdateProgressBar,
-                lvProgressValue = lvContentUpdateProgress
-            )
+            lvShowUpdateProgressBar.postValue(true)
+            withContext(coroutineScopeIO.coroutineContext) {
+                splashRepository.onSearchForContentUpdates(lvProgressValue = lvContentUpdateProgress)
+            }
+            lvShowUpdateProgressBar.postValue(false)
         }
     }
 

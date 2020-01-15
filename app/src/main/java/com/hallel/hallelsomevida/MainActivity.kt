@@ -35,5 +35,13 @@ class MainActivity : BaseActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
             startActivity(intent)
         }
+
+        viewModel.showDialogErrorFromExceptions().singleObserve(this) {
+            showSimpleDialog(
+                title = "Erro",
+                message = "Ocorreu um erro inexperado",
+                negativeButtonText = "Fechar"
+            )
+        }
     }
 }

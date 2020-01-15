@@ -1,11 +1,13 @@
 package com.hallel.home.repository
 
+import com.hallel.core.utils.ResultWrapper
 import com.hallel.localrepository.dao.EventContentDao
 import com.hallel.localrepository.dao.ParticipantDao
 import com.hallel.localrepository.dao.PartnerDao
 import com.hallel.localrepository.entity.EventContent
 import com.hallel.localrepository.entity.Participant
 import com.hallel.localrepository.entity.Partner
+import java.lang.Exception
 
 class HomeRepositoryImpl(
     private val partnerDao: PartnerDao,
@@ -13,18 +15,30 @@ class HomeRepositoryImpl(
     private val eventContentDao: EventContentDao
 ): HomeRepository {
 
-    override suspend fun getEventContent(eventId: Int): EventContent? {
-        return mockEventContent()
+    override suspend fun getEventContent(eventId: Int): ResultWrapper<EventContent?> {
+        return try{
+            ResultWrapper.Success(mockEventContent())
+        } catch (e: Exception) {
+            ResultWrapper.Error(error = e)
+        }
         //return eventContentDao.getEventContent(eventId)
     }
 
-    override suspend fun getEventParticipants(): List<Participant> {
-        return mockParticipantList()
+    override suspend fun getEventParticipants(): ResultWrapper<List<Participant>> {
+        return try{
+            ResultWrapper.Success(mockParticipantList())
+        } catch (e: Exception) {
+            ResultWrapper.Error(error = e)
+        }
         //return participantDao.getParticipants(eventParticipants)
     }
 
-    override suspend fun getPartners(): List<Partner> {
-        return mockPartnerList()
+    override suspend fun getPartners(): ResultWrapper<List<Partner>> {
+        return try{
+            ResultWrapper.Success(mockPartnerList())
+        } catch (e: Exception) {
+            ResultWrapper.Error(error = e)
+        }
         //return partnerDao.getAllPartners()
     }
 

@@ -1,20 +1,17 @@
 package com.hallel.access.repository
 
+import com.hallel.core.utils.ResultWrapper
 import com.hallel.localrepository.dao.UserDao
 import com.hallel.localrepository.entity.User
-import com.hallel.remoterepository.request.UserRequestObject
 import com.hallel.remoterepository.source.UserRemoteSouce
-import kotlinx.coroutines.*
-import kotlin.coroutines.coroutineContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import java.lang.Exception
 
 class AccessRepositoryImpl(
     private val userRemoteSource: UserRemoteSouce,
     private val userLocalRepository: UserDao
 ) : AccessRepository {
 
-    override suspend fun registerNewUser(name: String, email: String, phone: String, birthday: String): Boolean {
+    override suspend fun registerNewUser(name: String, email: String, phone: String, birthday: String): ResultWrapper<Boolean> {
         val newUser = User(
             userId = 1,
             userName = name,
@@ -23,7 +20,13 @@ class AccessRepositoryImpl(
             userPhone = phone,
             isSent = 0
         )
-        return saveNewUserLocal(newUser)
+        return try {
+            val isUserSaved = userLocalRepository.updateUser(newUser) > 0
+            ResultWrapper.Success(isUserSaved)
+        } catch (exception: Exception) {
+            ResultWrapper.Error(error = exception)
+        }
+
         /*return userRemoteSource.registerNewUser(
             user = UserRequestObject(
                 name = name,
@@ -32,12 +35,6 @@ class AccessRepositoryImpl(
                 birthday = birthday
             )
         )*/
-    }
-
-    private suspend fun saveNewUserLocal(newUser: User): Boolean {
-        return suspendCoroutine {
-            it.resume(userLocalRepository.updateUser(newUser) > 0)
-        }
     }
 
     override suspend fun userAlreadyRegistered(userEmail: String): Boolean {

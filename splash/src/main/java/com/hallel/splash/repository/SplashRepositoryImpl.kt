@@ -14,11 +14,7 @@ class SplashRepositoryImpl(
 ): SplashRepository {
 
     //TODO Create updateLocalRepository to get data
-    override suspend fun onSearchForContentUpdates(
-        lvShowProgressBar: MutableLiveData<Boolean>,
-        lvProgressValue: MutableLiveData<Pair<Int, Int>>
-    ) {
-        lvShowProgressBar.postValue(true)
+    override suspend fun onSearchForContentUpdates(lvProgressValue: MutableLiveData<Pair<Int, Int>>) {
         var count = 0
         val total = 10
         while (count < total) {
@@ -26,7 +22,6 @@ class SplashRepositoryImpl(
             count += 5
             lvProgressValue.postValue(Pair(count, total))
         }
-        lvShowProgressBar.postValue(false)
             /*val content = updateRemoteRepository.getUpdateContent()
             when {
                 content.isNotEmpty() -> {

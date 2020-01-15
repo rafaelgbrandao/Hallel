@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.hallel.access.helper.*
 import com.hallel.access.repository.AccessRepository
 import com.hallel.core.utils.Event
+import com.hallel.core.utils.ResultWrapper.*
 import com.hallel.core_ui.base.BaseViewModel
-import com.hallel.core_ui.navigation.NavigationHelper.lvStartNavigationFromFlow
+import com.hallel.core_ui.helpers.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
 import kotlinx.coroutines.launch
 
@@ -65,9 +66,14 @@ class AccessViewModel(
 
     fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
         coroutineScopeIO.launch {
-            when {
-                accessRepository.registerNewUser(name, email, phone, birthday) -> buildNavigation()
-                else -> lvErrorOnRegisterNewUser.postValue(Unit)
+            when (val result = accessRepository.registerNewUser(name, email, phone, birthday)) {
+                is Error -> {handleErrors(result.error) }
+                is Success -> {
+                    when {
+                        result.value -> buildNavigation()
+                        else -> lvErrorOnRegisterNewUser.postValue(Unit)
+                    }
+                }
             }
         }
     }

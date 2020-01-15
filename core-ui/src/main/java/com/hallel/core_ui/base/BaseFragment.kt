@@ -12,10 +12,10 @@ open class BaseFragment: Fragment() {
     fun showSimpleDialog(
         title: String?,
         message: String?,
-        positiveButtonText: String?,
-        positiveButtonListener: () -> Unit,
-        negativeButtonText: String?,
-        negativeButtonListener: () -> Unit,
+        positiveButtonText: String? = null,
+        positiveButtonListener: () -> Unit = { },
+        negativeButtonText: String? = null,
+        negativeButtonListener: () -> Unit= { },
         isCancelable: Boolean = true
     ) {
         baseActivity?.showSimpleDialog(
