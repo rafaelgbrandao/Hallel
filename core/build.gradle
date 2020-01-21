@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply from: "../dependencies.gradle"
 apply from: "../version.gradle"
 
@@ -37,4 +38,5 @@ dependencies {
     api generalDeps.kotlin
     api generalDeps.coroutines
     api generalDeps.lifecycle
+    api generalDeps.lifecycle_viewmodel
 }

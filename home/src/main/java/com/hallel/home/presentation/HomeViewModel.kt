@@ -2,6 +2,7 @@ package com.hallel.home.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.hallel.core.utils.ResultWrapper
 import com.hallel.core_ui.base.BaseViewModel
 import com.hallel.home.repository.HomeRepository
@@ -34,7 +35,7 @@ class HomeViewModel(
     private val lvEventNotAvailable = MutableLiveData<Unit>()
 
     fun onLoadPartners() {
-        coroutineScopeIO.launch {
+        viewModelScope.launch(dispatchers.IO) {
             when (val partnerList = homeRepository.getPartners()) {
                 is ResultWrapper.Error -> handleErrors(partnerList.error)
                 is ResultWrapper.Success ->
@@ -47,7 +48,7 @@ class HomeViewModel(
     }
 
     fun onLoadParticipants() {
-        coroutineScopeIO.launch {
+        viewModelScope.launch(dispatchers.IO) {
             when (val participantList = homeRepository.getEventParticipants()) {
                 is ResultWrapper.Error -> handleErrors(participantList.error)
                 is ResultWrapper.Success ->
@@ -60,7 +61,7 @@ class HomeViewModel(
     }
 
     fun onLoadEventContent(eventId: Int) {
-        coroutineScopeIO.launch {
+        viewModelScope.launch(dispatchers.IO) {
             when (val eventContent = homeRepository.getEventContent(eventId)) {
                 is ResultWrapper.Error -> handleErrors(eventContent.error)
                 is ResultWrapper.Success ->

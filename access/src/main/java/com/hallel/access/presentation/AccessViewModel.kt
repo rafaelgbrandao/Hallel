@@ -2,6 +2,7 @@ package com.hallel.access.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.hallel.access.helper.*
 import com.hallel.access.repository.AccessRepository
 import com.hallel.core.utils.Event
@@ -32,7 +33,7 @@ class AccessViewModel(
     private val lvErrorOnRegisterNewUser = MutableLiveData<Unit>()
 
     fun onVerifyIfUserExist(userEmail: String) {
-        coroutineScopeIO.launch {
+        viewModelScope.launch(dispatchers.IO) {
             if (isValidEmail(userEmail)) {
                 when {
                     accessRepository.userAlreadyRegistered(userEmail) -> buildNavigation()
@@ -65,7 +66,7 @@ class AccessViewModel(
     }
 
     fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
-        coroutineScopeIO.launch {
+        viewModelScope.launch(dispatchers.IO) {
             when (val result = accessRepository.registerNewUser(name, email, phone, birthday)) {
                 is Error -> {handleErrors(result.error) }
                 is Success -> {

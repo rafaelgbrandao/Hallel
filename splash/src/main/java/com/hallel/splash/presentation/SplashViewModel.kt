@@ -2,6 +2,7 @@ package com.hallel.splash.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.hallel.core.utils.Event
 import com.hallel.core_ui.base.BaseViewModel
 import com.hallel.core_ui.helpers.lvStartNavigationFromFlow
@@ -29,9 +30,9 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
     private val lvShowUpdateProgressBar = MutableLiveData<Boolean>()
 
     fun onSearchForUpdate() {
-        coroutineScopeIO.launch {
+        viewModelScope.launch(dispatchers.IO) {
             lvShowUpdateProgressBar.postValue(true)
-            withContext(coroutineScopeIO.coroutineContext) {
+            withContext(coroutineContext) {
                 splashRepository.onSearchForContentUpdates(lvProgressValue = lvContentUpdateProgress)
             }
             lvShowUpdateProgressBar.postValue(false)
@@ -47,7 +48,7 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
     }
 
     fun onValidateUser(screenName: String) =
-        coroutineScopeIO.launch {
+        viewModelScope.launch(dispatchers.IO) {
             lvStartNavigationFromFlow.postValue(
                 Event(NavigationObject(screenName, splashRepository.isUserValid()))
             )
