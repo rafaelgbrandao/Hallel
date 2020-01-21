@@ -1,12 +1,9 @@
 package com.hallel.splash.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.hallel.localrepository.dao.UserDao
 import com.hallel.remoterepository.source.UpdateRemoteSource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.flow
 
 class SplashRepositoryImpl(
     private val userDao: UserDao,
@@ -14,13 +11,14 @@ class SplashRepositoryImpl(
 ): SplashRepository {
 
     //TODO Create updateLocalRepository to get data
-    override suspend fun onSearchForContentUpdates(lvProgressValue: MutableLiveData<Pair<Int, Int>>) {
+    @UseExperimental(FlowPreview::class)
+    override val onSearchForContentUpdates = flow {
         var count = 0
         val total = 10
         while (count < total) {
             delay(500)
             count += 5
-            lvProgressValue.postValue(Pair(count, total))
+            emit(Pair(count, total))
         }
             /*val content = updateRemoteRepository.getUpdateContent()
             when {

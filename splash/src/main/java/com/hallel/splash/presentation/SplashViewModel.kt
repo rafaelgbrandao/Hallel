@@ -9,6 +9,8 @@ import com.hallel.core_ui.helpers.lvStartNavigationFromFlow
 import com.hallel.core_ui.navigation.NavigationObject
 import com.hallel.splash.BuildConfig
 import com.hallel.splash.repository.SplashRepository
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -29,11 +31,14 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
     fun hasContentForUpdate(): LiveData<Boolean> = lvShowUpdateProgressBar
     private val lvShowUpdateProgressBar = MutableLiveData<Boolean>()
 
+    @UseExperimental(FlowPreview::class)
     fun onSearchForUpdate() {
         viewModelScope.launch(dispatchers.IO) {
             lvShowUpdateProgressBar.postValue(true)
             withContext(coroutineContext) {
-                splashRepository.onSearchForContentUpdates(lvProgressValue = lvContentUpdateProgress)
+                splashRepository.onSearchForContentUpdates.collect {
+                    lvContentUpdateProgress.postValue(it)
+                }
             }
             lvShowUpdateProgressBar.postValue(false)
         }
