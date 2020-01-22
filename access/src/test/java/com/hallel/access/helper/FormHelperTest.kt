@@ -9,7 +9,7 @@ class FormHelperTest {
         private const val VALID_EMAIL = "teste@teste.com"
         private const val INVALID_EMAIL = "teste.teste.com"
         private const val VALID_MAX_BIRTHDAY = "12/12/2000"
-        private const val VALID_MIN_BIRTHDAY = "12/12/1919"
+        private const val VALID_MIN_BIRTHDAY = "12/12/1920"
         private const val INVALID_BIRTHDAY = "40/40/2070"
         private const val INVALID_MIN_BIRTHDAY = "12/12/1900"
         private const val INVALID_MAX_BIRTHDAY = "12/12/2019"

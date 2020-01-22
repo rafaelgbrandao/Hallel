@@ -41,6 +41,7 @@ dependencies {
     testImplementation testDeps.junit
     testImplementation testDeps.core_testing
     testImplementation testDeps.koin_test
+    testImplementation testDeps.coroutine_test
 
     androidTestImplementation testDeps.rules
     testImplementation testDeps.mockk

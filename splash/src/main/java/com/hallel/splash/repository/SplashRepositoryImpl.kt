@@ -4,6 +4,7 @@ import com.hallel.localrepository.dao.UserDao
 import com.hallel.remoterepository.source.UpdateRemoteSource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class SplashRepositoryImpl(
     private val userDao: UserDao,
@@ -17,7 +18,7 @@ class SplashRepositoryImpl(
         val total = 10
         while (count < total) {
             delay(500)
-            count += 5
+            count += 2
             emit(Pair(count, total))
         }
             /*val content = updateRemoteRepository.getUpdateContent()
@@ -36,7 +37,7 @@ class SplashRepositoryImpl(
                 }
                 else -> lvShowProgressBar.postValue(false)
             }*/
-    }
+    }.flowOn(Dispatchers.IO)
 
     override fun onSearchForAppVersion(): Int {
         //return updateRemoteRepository.getAppVersion()

@@ -3,19 +3,29 @@ package com.hallel.access.presentation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.hallel.access.helper.FormErrors
 import com.hallel.access.repository.AccessRepository
-import com.hallel.core_ui.navigation.NavigationObject
+import com.hallel.core.utils.ResultWrapper
+import com.hallel.core_ui.helpers.lvStartNavigationFromFlow
 import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class AccessViewModelTest {
 
     @get:Rule
     val instantRule = InstantTaskExecutorRule()
+
+    private val testDispatcher = TestCoroutineDispatcher()
 
     @MockK
     private lateinit var accessRepository: AccessRepository
@@ -27,38 +37,42 @@ class AccessViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    @After
+    fun onFinish() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
     fun givenValidEmail_whenVerifyIfUserExist_thenAssertUserNotExist() {
-        every {
-            accessRepository.userAlreadyRegistered(any())
-        } returns false
+         coEvery {
+             accessRepository.userAlreadyRegistered(any())
+         } returns false
 
         viewModel.onVerifyIfUserExist(EMAIL)
 
         assertEquals(Unit, viewModel.userNotRegistered().value)
-
     }
 
     @Test
     fun givenValidEmail_whenVerifyIfUserExist_thenAssertUserExist() {
-        every {
+        coEvery {
             accessRepository.userAlreadyRegistered(any())
         } returns true
 
         viewModel.onVerifyIfUserExist(EMAIL)
 
-        assertEquals(
-            NavigationObject(SCREEN_NAME),
-            NavigationHelper.lvStartNavigationFromFlow.value
-        )
-
+        val navObject = lvStartNavigationFromFlow.value?.getContentIfNotHandled()
+        assertEquals(SCREEN_NAME, navObject?.screenName)
+        assertEquals(null, navObject?.extras)
     }
 
     @Test
     fun givenInvalidEmail_whenVerifyIfUserExist_thenAssertUserNotExist() {
-        every {
+        coEvery {
             accessRepository.userAlreadyRegistered(any())
         } returns false
 
@@ -101,9 +115,9 @@ class AccessViewModelTest {
 
     @Test
     fun givenValidFormFields_whenRegisterNewUser_thenAssertSuccessOnRegisterUser() {
-        every {
+        coEvery {
             accessRepository.registerNewUser(any(), any(), any(), any())
-        } returns true
+        } returns ResultWrapper.Success(true)
 
         viewModel.registerNewUser(
             name = NAME,
@@ -112,17 +126,16 @@ class AccessViewModelTest {
             email = EMAIL
         )
 
-        assertEquals(
-            NavigationObject(SCREEN_NAME),
-            NavigationHelper.lvStartNavigationFromFlow.value
-        )
+        val navObject = lvStartNavigationFromFlow.value?.getContentIfNotHandled()
+        assertEquals(SCREEN_NAME, navObject?.screenName)
+        assertEquals(null, navObject?.extras)
     }
 
     @Test
     fun givenValidFormFields_whenRegisterNewUser_thenAssertErrorOnRegisterUser() {
-        every {
+        coEvery {
             accessRepository.registerNewUser(any(), any(), any(), any())
-        } returns false
+        } returns ResultWrapper.Success(false)
 
         viewModel.registerNewUser(
             name = NAME,

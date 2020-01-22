@@ -39,4 +39,5 @@ dependencies {
     api generalDeps.coroutines
     api generalDeps.lifecycle
     api generalDeps.lifecycle_viewmodel
+    testApi testDeps.coroutine_test
 }

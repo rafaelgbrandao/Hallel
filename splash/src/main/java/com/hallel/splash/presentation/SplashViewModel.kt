@@ -12,7 +12,6 @@ import com.hallel.splash.repository.SplashRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SplashViewModel(private val splashRepository: SplashRepository): BaseViewModel() {
 
@@ -33,12 +32,10 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
 
     @UseExperimental(FlowPreview::class)
     fun onSearchForUpdate() {
-        viewModelScope.launch(dispatchers.IO) {
+        viewModelScope.launch {
             lvShowUpdateProgressBar.postValue(true)
-            withContext(coroutineContext) {
-                splashRepository.onSearchForContentUpdates.collect {
-                    lvContentUpdateProgress.postValue(it)
-                }
+            splashRepository.onSearchForContentUpdates.collect {
+                lvContentUpdateProgress.postValue(it)
             }
             lvShowUpdateProgressBar.postValue(false)
         }
@@ -53,7 +50,7 @@ class SplashViewModel(private val splashRepository: SplashRepository): BaseViewM
     }
 
     fun onValidateUser(screenName: String) =
-        viewModelScope.launch(dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             lvStartNavigationFromFlow.postValue(
                 Event(NavigationObject(screenName, splashRepository.isUserValid()))
             )

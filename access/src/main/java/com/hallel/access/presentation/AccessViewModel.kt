@@ -33,7 +33,7 @@ class AccessViewModel(
     private val lvErrorOnRegisterNewUser = MutableLiveData<Unit>()
 
     fun onVerifyIfUserExist(userEmail: String) {
-        viewModelScope.launch(dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             if (isValidEmail(userEmail)) {
                 when {
                     accessRepository.userAlreadyRegistered(userEmail) -> buildNavigation()
@@ -66,7 +66,7 @@ class AccessViewModel(
     }
 
     fun registerNewUser(name: String, email: String, phone: String, birthday: String) {
-        viewModelScope.launch(dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             when (val result = accessRepository.registerNewUser(name, email, phone, birthday)) {
                 is Error -> {handleErrors(result.error) }
                 is Success -> {
